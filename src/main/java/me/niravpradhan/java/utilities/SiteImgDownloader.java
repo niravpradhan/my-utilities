@@ -42,6 +42,9 @@ public class SiteImgDownloader {
 
         imgElements.forEach(e -> {
             String src = e.attr("src");
+            if (src.isEmpty()) {
+                src = e.attr("data-src");
+            }
             String downloadUrl = baseUrl + src;
             String fileName = targetDirectory + fileSeperator + fileSuffix + ++index[0] + fileExtension;
 
