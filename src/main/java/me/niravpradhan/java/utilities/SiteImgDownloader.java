@@ -10,6 +10,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.CompletableFuture;
@@ -45,7 +47,8 @@ public class SiteImgDownloader {
             if (src.isEmpty()) {
                 src = e.attr("data-src");
             }
-            String downloadUrl = baseUrl + src;
+            String downloadUrl = (src.contains(" ")) ? baseUrl + src.replaceAll("\\s", "%20") : baseUrl + src;
+
             String fileName = targetDirectory + fileSeperator + fileSuffix + ++index[0] + fileExtension;
 
             CompletableFuture.runAsync(() -> download(downloadUrl, fileName, downloadedSoFar));
